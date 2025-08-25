@@ -1,0 +1,7 @@
+[project]
+name = "lob-sim"
+description = "Limit Order Book Simulator for HFT/Quant Research"
+version = "0.1.0"
+authors = ["Your Name <your@email.com>"]
+requires-python = ">=3.8"
+dependencies = ["sortedcontainers", "matplotlib"]
