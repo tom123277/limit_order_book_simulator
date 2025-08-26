@@ -41,6 +41,8 @@ class HeapOrderBook:
                 if o.id == order_id:
                     del queue[idx]
                     del self.order_map[order_id]
+                    if not queue:
+                        del book[order.price]
                     # Lazy deletion: don't remove price from heap yet
                     return True
         return False

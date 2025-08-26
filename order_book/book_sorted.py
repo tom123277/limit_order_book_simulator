@@ -33,6 +33,8 @@ class SortedOrderBook:
                 if o.id == order_id:
                     del queue[idx]
                     del self.order_map[order_id]
+                    if not queue:
+                        del book[order.price]
                     return True
         return False
 
