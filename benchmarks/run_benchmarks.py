@@ -1,4 +1,3 @@
-
 import time
 import sys
 import os
@@ -7,6 +6,8 @@ import random
 from sortedcontainers import SortedDict
 import matplotlib.pyplot as plt
 from trader_strategies import MarketMaker, MomentumTrader, RandomTrader
+from sim.event_stream import SyntheticEventStream
+from sim.latency import LatencyBench
 
 # Dynamically add project root to sys.path for portable imports
 project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
@@ -90,6 +91,15 @@ def benchmark_heapq():
 if __name__ == "__main__":
     print("Benchmarking Limit Order Book Implementations...")
     spread, depth = benchmark_limit_order_book_with_traders()
+
+    # LatencyBench for LimitOrderBook
+    print("\nLatency Profiling (LimitOrderBook):")
+    event_stream = SyntheticEventStream(n_events=NUM_ORDERS)
+    lob = LimitOrderBook()
+    bench = LatencyBench(lob, event_stream)
+    bench.run(warmup=10)
+    bench.pretty_report()
+
     benchmark_sorted_dict()
     benchmark_heapq()
     # Visualization
